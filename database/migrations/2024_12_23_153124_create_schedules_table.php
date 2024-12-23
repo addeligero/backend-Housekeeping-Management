@@ -13,14 +13,15 @@ return new class extends Migration {
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('task_id')->constrained()->onDelete('cascade'); // Task reference
-            $table->foreignId('staff_id')->constrained('users')->onDelete('cascade'); // Assigned staff
-            $table->date('scheduled_date'); // Date for the task
-            $table->enum('status', ['Pending', 'In Progress', 'Completed'])->default('Pending'); // Task status
-            $table->string('proof_of_completion')->nullable(); // Path to proof of completion image
-            $table->timestamp('completed_at')->nullable(); // Timestamp when task is completed
+            $table->foreignId('task_id')->constrained()->onDelete('cascade');
+            $table->foreignId('staff_id')->constrained('users')->onDelete('cascade');
+            $table->date('scheduled_date');
+            $table->enum('status', ['Pending', 'In Progress', 'Completed'])->default('Pending');
+            $table->string('proof_of_completion')->nullable(); // Add this line
+            $table->timestamp('completed_at')->nullable();
             $table->timestamps();
         });
+
 
     }
 

@@ -22,15 +22,10 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('logout', [AuthController::class,'logout']);
     Route::get('/users', [UserController::class, 'index']);
     Route::apiResource('tasks', TaskController::class);
     Route::apiResource('schedules', ScheduleController::class);
-});
-
-Route::middleware('auth:sanctum')->group(function () {
     Route::get('/my-schedules', [ScheduleController::class, 'mySchedules']);
-});
-
-Route::middleware('auth:sanctum')->group(function () {
     Route::post('/schedules/{schedule}/upload-proof', [ScheduleController::class, 'uploadProof']);
 });
