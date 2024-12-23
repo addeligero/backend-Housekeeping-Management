@@ -54,7 +54,7 @@ class AuthController extends Controller
         $validated = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string|min:6',
-            'role' => 'required|string|in:admin,client', // Validate role as admin or client
+            'role' => 'required|string|in:admin,staff', // Validate role as admin or client
         ]);
 
         if ($validated->fails()) {
@@ -75,8 +75,8 @@ class AuthController extends Controller
                 return response()->json(['error' => 'Unauthorized: You are not an admin'], 403);
             }
 
-            if ($request->role === 'client' && $user->is_admin) {
-                return response()->json(['error' => 'Unauthorized: You are not a client'], 403);
+            if ($request->role === 'staff' && $user->is_admin) {
+                return response()->json(['error' => 'Unauthorized: You are not a staff'], 403);
             }
 
             $token = $user->createToken('auth_token')->plainTextToken;
