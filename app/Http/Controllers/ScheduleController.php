@@ -9,8 +9,10 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        return Schedule::with('task', 'staff')->get();
+        return Schedule::with('task', 'staff')
+            ->get(['id', 'task_id', 'staff_id', 'room_number', 'scheduled_date', 'status', 'proof_of_completion']);
     }
+
 
     public function store(Request $request)
     {
@@ -18,11 +20,14 @@ class ScheduleController extends Controller
             'task_id' => 'required|exists:tasks,id',
             'staff_id' => 'required|exists:users,id',
             'scheduled_date' => 'required|date',
+            'room_number' => 'required|string', // Include validation for room_number
             'status' => 'in:Pending,In Progress,Completed|nullable',
         ]);
 
         return Schedule::create(array_merge($validated, ['status' => 'Pending']));
     }
+
+
 
     public function update(Request $request, Schedule $schedule)
     {
@@ -43,13 +48,9 @@ class ScheduleController extends Controller
     public function mySchedules(Request $request)
     {
         $user = $request->user();
-        if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
         return Schedule::with('task')
             ->where('staff_id', $user->id)
-            ->get();
+            ->get(['id', 'task_id', 'room_number', 'scheduled_date', 'status', 'proof_of_completion']);
     }
 
     public function uploadProof(Request $request, $id)
