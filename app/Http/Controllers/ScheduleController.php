@@ -32,12 +32,14 @@ class ScheduleController extends Controller
     public function update(Request $request, Schedule $schedule)
     {
         $validated = $request->validate([
-            'status' => 'in:Pending,In Progress,Completed',
+            'status' => 'in:Pending,In Progress,Processing,Completed', // Add 'Processing' as a valid status
         ]);
 
         $schedule->update($validated);
-        return $schedule;
+
+        return response()->json($schedule);
     }
+
 
     public function destroy(Schedule $schedule)
     {
