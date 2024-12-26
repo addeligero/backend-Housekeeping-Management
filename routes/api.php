@@ -28,4 +28,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('schedules', ScheduleController::class);
     Route::get('/my-schedules', [ScheduleController::class, 'mySchedules']);
     Route::post('/schedules/{schedule}/upload-proof', [ScheduleController::class, 'uploadProof']);
+    Route::get('/schedule-history', [ScheduleController::class, 'getScheduleHistory']);
+
 });

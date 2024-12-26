@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Schedule extends Model
 {
     use HasFactory;
+    
+    
     protected $fillable = [
         'task_id',
         'staff_id',
@@ -26,4 +28,5 @@ class Schedule extends Model
     {
         return $this->belongsTo(User::class, 'staff_id');
     }
+
 }

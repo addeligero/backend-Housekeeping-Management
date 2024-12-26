@@ -77,5 +77,17 @@ class ScheduleController extends Controller
 
         return response()->json(['error' => 'File upload failed.'], 400);
     }
+    public function getScheduleHistory(Request $request)
+    {
+        try {
+            // Fetch all schedules with related tasks and staff
+            $schedules = Schedule::with(['task', 'staff'])->get();
+
+            // Return the schedules in the required format
+            return response()->json($schedules, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 
 }

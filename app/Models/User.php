@@ -34,6 +34,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class, 'staff_id');
+    }
 
     /**
      * The attributes that should be cast.
